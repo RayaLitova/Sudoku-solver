@@ -48,6 +48,20 @@ def remove_poss(line,column):
             if map[line][column].num in map[i+math.floor(map[line][column].square_num/3)*3][j+((map[line][column].square_num - (math.floor(map[line][column].square_num/3)*3))*3)].poss:
                 map[i+math.floor(map[line][column].square_num/3)*3][j+((map[line][column].square_num - (math.floor(map[line][column].square_num/3)*3))*3)].poss.remove(map[line][column].num)
 
+def solve():
+    global map
+    win = 1
+    for i in range(9):
+        for j in range(9):
+            if len(map[i][j].poss)==1:
+                map[i][j].num = map[i][j].poss[0]
+                remove_poss(map[i][j].line, map[i][j].column)
+            if len(map[i][j].poss)>1:
+                win = 0
+    if not win:
+        solve()
+    
+
 def print_map():
     global map
     for i in range(9):
@@ -58,6 +72,7 @@ def print_map():
 def game():
     create_map()
     add_nums()
+    solve()
     print_map()
 
 game()
